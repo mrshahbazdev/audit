@@ -17,7 +17,7 @@
                     </div>
                     <span
                         class="text-[10px] sm:text-xs font-bold {{ ($index + 1) <= $currentStep ? 'text-primary' : 'text-slate-400' }} text-center uppercase truncate"
-                        title="{{ $pillar->name }}">{{ $pillar->name }}</span>
+                        title="{{ __($pillar->name) }}">{{ __($pillar->name) }}</span>
                 </div>
             @endforeach
         </div>
@@ -41,7 +41,7 @@
                     class="material-symbols-outlined text-3xl">{{ $pillars[$currentStep - 1]->icon ?? 'account_tree' }}</span>
             </div>
             <div>
-                <h2 class="text-2xl font-bold mb-2">{{ __('Pillar') }} {{ $currentStep }}: {{ $currentLevelName }}</h2>
+                <h2 class="text-2xl font-bold mb-2">{{ __('Pillar') }} {{ $currentStep }}: {{ __($currentLevelName) }}</h2>
                 <p class="text-slate-600 dark:text-slate-400 max-w-2xl">
                     {{ __('Please answer the following questions to assess your maturity level in this pillar.') }}
                 </p>
@@ -57,7 +57,7 @@
                 <div class="flex flex-col gap-6">
                     <div class="flex justify-between items-start">
                         <h3 class="text-lg font-bold leading-snug">{{ $index + 1 }}.
-                            {{ $question->question ?? $question->criterion }}</h3>
+                            {{ __($question->question ?? $question->criterion) }}</h3>
                         @if($question->is_required && empty($answers[$question->id]['score']))
                             <span
                                 class="text-xs font-bold text-orange-500 px-2 py-1 bg-orange-50 dark:bg-orange-900/30 rounded">{{ __('REQUIRED') }}</span>
@@ -71,7 +71,7 @@
                         @endif
                     </div>
 
-                    <p class="text-slate-600 dark:text-slate-400">{{ $question->description }}</p>
+                    <p class="text-slate-600 dark:text-slate-400">{{ __($question->description) }}</p>
 
                     @switch($question->question_type)
                         @case('yes_no')

@@ -85,36 +85,36 @@ class DatabaseSeeder extends Seeder
         // 3. Seed the Official 25 Questions (5 per Pillar)
         // ============================================================
         $questions = [
-            // ── UMSATZ (Revenue) ─────────────────────────────────────
+            // ── UMSATZ (Revenue / Sales) ─────────────────────────────
             [
                 'pillar' => 'Umsatz',
-                'question' => 'How qualified and consistent is the quality of your incoming leads?',
-                'description' => 'Rate the reliability and quality of your lead pipeline on a scale of 1-5.',
-                'recommendation' => 'Focus on refining your targeting criteria. Use lead scoring and qualification frameworks (e.g., BANT) to filter for high-intent prospects before sales calls.',
+                'question' => 'The necessary monthly turnover is defined and realistically planned.',
+                'description' => 'Does the company have a clear, written monthly revenue target that is realistic based on past data and current capacity?',
+                'recommendation' => 'Define a specific monthly revenue goal based on fixed costs + profit margin target. Break it down to weekly targets and review it every month with your team.',
             ],
             [
                 'pillar' => 'Umsatz',
-                'question' => 'What is your current sales closing rate and how consistent is it?',
-                'description' => 'Evaluate how reliably your sales process converts prospects into paying customers.',
-                'recommendation' => 'Implement a structured sales playbook. Train your team on objection handling and standardize your closing methodology to improve consistency.',
+                'question' => 'Suitable interested parties are continuously reached.',
+                'description' => 'Does the company have a reliable, active system for consistently attracting qualified prospects — not just occasional campaigns?',
+                'recommendation' => 'Build a consistent lead generation engine (e.g., content marketing, outbound outreach, referral program). The emphasis is on CONTINUOUS, not one-off campaigns.',
             ],
             [
                 'pillar' => 'Umsatz',
-                'question' => 'How accurately can you predict your revenue for the next 3 months?',
-                'description' => 'Assess the reliability of your revenue forecasting model.',
-                'recommendation' => 'Build a CRM-based pipeline with deal stages and probability weightings. Monthly forecasting reviews will dramatically improve predictability.',
+                'question' => 'A sufficient proportion of leads become customers.',
+                'description' => 'Is the conversion rate from prospect to paying customer high enough to meet the planned monthly revenue goal?',
+                'recommendation' => 'Analyze your sales funnel for drop-off points. Improve the offer, the sales conversation, or the follow-up process to convert a higher percentage of leads.',
             ],
             [
                 'pillar' => 'Umsatz',
-                'question' => 'Are your customers consistent, reliable, and do they renew or return?',
-                'description' => 'Evaluate customer reliability, churn rate, and repeat purchase behavior.',
-                'recommendation' => 'Launch a customer success or retention program. Regular check-ins, NPS surveys, and proactive support can dramatically reduce churn.',
+                'question' => 'Services/deliveries will be as promised.',
+                'description' => 'Does the company consistently deliver what was sold — on time, at the agreed quality, and without cutting corners?',
+                'recommendation' => 'Document your delivery/fulfillment process. Identify where quality dips or delays happen and put quality checkpoints in place to ensure every client receives what was promised.',
             ],
             [
                 'pillar' => 'Umsatz',
-                'question' => 'Is your pricing strategy optimized for your target market and value delivered?',
-                'description' => 'Assess whether your pricing reflects the value you provide and whether it is competitive.',
-                'recommendation' => 'Conduct a value-based pricing analysis. Survey your best customers on willingness to pay and benchmark against competitors to find the optimal price point.',
+                'question' => 'Customers comply with payment and cooperation obligations.',
+                'description' => 'Do customers pay on time and cooperate as required (e.g., providing feedback, materials, or access) so the service can be completed?',
+                'recommendation' => 'Introduce clear payment terms and enforceable contracts. Set up automated payment reminders and define client onboarding steps to ensure smooth cooperation from day one.',
             ],
 
             // ── GEWINN (Profit) ───────────────────────────────────────

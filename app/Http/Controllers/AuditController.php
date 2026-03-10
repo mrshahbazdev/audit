@@ -87,4 +87,18 @@ class AuditController extends Controller
 
         return view('audit.report', compact('audit', 'overallScore', 'overallMaturity'));
     }
+
+    public function destroy(Audit $audit)
+    {
+        $user = auth()->user();
+        $sameOrg = $user->organization_id && $user->organization_id === $audit->organization_id;
+        $isCreator = $audit->created_by === $user->id;
+        if (!$sameOrg && !$isCreator) {
+            abort(403);
+        }
+
+        $audit->delete();
+
+        return back()->with('success', __('Audit deleted successfully.'));
+    }
 }

@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/audit/start', [AuditController::class, 'start'])->name('audit.start');
     Route::get('/audit/{audit}/assessment', AuditAssessment::class)->name('audit.assessment');
     Route::get('/audit/{audit}/results', [AuditController::class, 'results'])->name('audit.results');
+    Route::delete('/audit/{audit}', [AuditController::class, 'destroy'])->name('audit.destroy');
     Route::get('/companies', \App\Livewire\Companies::class)->name('companies');
     Route::get('/templates', \App\Livewire\Templates::class)->name('templates');
     Route::get('/templates/{template}/build', \App\Livewire\TemplateBuilder::class)->name('templates.builder');

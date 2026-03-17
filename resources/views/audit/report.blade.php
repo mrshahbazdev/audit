@@ -371,7 +371,7 @@
             <tbody>
                 @foreach($audit->results as $result)
                     <tr>
-                        <td class="pillar-name">{{ $result->level }}</td>
+                        <td class="pillar-name">{{ __($result->level) }}</td>
                         <td>
                             <div class="bar-cell">
                                 <div class="progress-bar-wrap">
@@ -393,7 +393,7 @@
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:24px;">
             @foreach($audit->results->sortBy('average_score')->take(3) as $result)
                 <div style="background:#fff7ed; border:1px solid #fed7aa; border-radius:12px; padding:16px;">
-                    <div style="font-weight:800; font-size:13px; color:#f97316; margin-bottom:4px;">⚠ {{ $result->level }}
+                    <div style="font-weight:800; font-size:13px; color:#f97316; margin-bottom:4px;">⚠ {{ __($result->level) }}
                     </div>
                     <div style="font-size:12px; color:#64748b;">{{ __('Score') }}
                         {{ number_format($result->average_score, 1) }}/5 –
@@ -403,7 +403,7 @@
             @endforeach
             @foreach($audit->results->sortByDesc('average_score')->take(1) as $result)
                 <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:12px; padding:16px;">
-                    <div style="font-weight:800; font-size:13px; color:#16a34a; margin-bottom:4px;">✓ {{ $result->level }}
+                    <div style="font-weight:800; font-size:13px; color:#16a34a; margin-bottom:4px;">✓ {{ __($result->level) }}
                     </div>
                     <div style="font-size:12px; color:#64748b;">{{ __('Score') }}
                         {{ number_format($result->average_score, 1) }}/5 –

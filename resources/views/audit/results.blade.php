@@ -241,7 +241,7 @@
                                 @foreach($labels as $label)
                                     <text class="text-[8px] font-bold fill-slate-500"
                                         style="font-size: 8px;" text-anchor="{{ $label['anchor'] }}" x="{{ $label['x'] }}" y="{{ $label['y'] }}">
-                                        {{ $label['name'] }}
+                                        {{ __($label['name']) }}
                                     </text>
                                 @endforeach
                             </svg>
@@ -303,9 +303,9 @@
                             <div
                                 class="flex flex-col gap-2 p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                                 <div class="flex justify-between items-center">
-                                    <span class="font-bold text-slate-700 dark:text-slate-300">{{ $level }}</span>
+                                    <span class="font-bold text-slate-700 dark:text-slate-300">{{ __($level) }}</span>
                                     <span class="text-sm font-bold {{ $textColor }}">{{ number_format($score, 1) }} •
-                                        {{ $maturity }}</span>
+                                        {{ __($maturity) }}</span>
                                 </div>
                                 <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
                                     <div class="{{ $colorCode }} h-2 rounded-full" style="width: {{ $percent }}%"></div>
@@ -352,13 +352,13 @@
                                 <div class="flex-1">
                                     <p class="text-xs font-bold text-red-400 uppercase tracking-wider mb-1">{{ $ans->question->pillar->name ?? __('General') }}</p>
                                     <p class="font-bold text-slate-800 dark:text-slate-200 mb-2 leading-tight">
-                                        {{ $ans->question->question }}
+                                        {{ __($ans->question->question) }}
                                     </p>
                                     <div class="text-sm text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800 p-3 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm relative">
                                         <div class="absolute -left-2 top-4 w-0 h-0 border-t-8 border-t-transparent border-r-8 border-r-slate-200 dark:border-r-slate-700 border-b-8 border-b-transparent"></div>
                                         <div class="absolute -left-[7px] top-[17px] w-0 h-0 border-t-7 border-t-transparent border-r-7 border-r-white dark:border-r-slate-800 border-b-7 border-b-transparent"></div>
                                         <span class="font-bold block mb-1">{{ __('Recommendation:') }}</span>
-                                        {{ $ans->question->failure_recommendation }}
+                                        {{ __($ans->question->failure_recommendation) }}
                                     </div>
                                 </div>
                             </div>

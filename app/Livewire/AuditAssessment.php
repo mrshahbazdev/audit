@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Audit;
 use App\Models\AuditAnswer;
 use App\Models\AuditResult;
+use App\Services\AllocoreKpiReporter;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -310,6 +311,9 @@ class AuditAssessment extends Component
                 ]
             );
         }
+
+        // Push the results to the Allocore Hub as KPIs (no-op if not configured).
+        app(AllocoreKpiReporter::class)->report($this->audit->fresh());
 
         // Redirect to results 
         return redirect()->route('audit.results', $this->audit);

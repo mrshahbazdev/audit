@@ -22,6 +22,9 @@ class AllocoreHub extends Component
 
     public ?string $testMessage = null;
 
+    // Onboarding: create an organization when the user has none yet.
+    public string $newOrgName = '';
+
     protected function rules(): array
     {
         return [
@@ -33,6 +36,11 @@ class AllocoreHub extends Component
 
     public function mount(): void
     {
+        $this->loadOrganization();
+    }
+
+    protected function loadOrganization(): void
+    {
         $this->organization = auth()->user()->organization;
 
         if ($this->organization) {
@@ -40,6 +48,26 @@ class AllocoreHub extends Component
             $this->apiKey = (string) $this->organization->allocore_api_key;
             $this->enabled = $this->organization->allocore_enabled ?? true;
         }
+    }
+
+    /**
+     * Create an organization and attach the current user to it, so a freshly
+     * registered user can connect the hub (and run audits) self-service.
+     */
+    public function createOrganization(): void
+    {
+        $validated = $this->validate([
+            'newOrgName' => 'required|string|max:255',
+        ]);
+
+        $organization = Organization::create(['name' => $validated['newOrgName']]);
+
+        $user = auth()->user();
+        $user->forceFill(['organization_id' => $organization->id])->save();
+
+        $this->reset('newOrgName');
+        $this->loadOrganization();
+        session()->flash('success', __('Organization created. You can now connect it to the AlloCore Hub.'));
     }
 
     public function save(): void

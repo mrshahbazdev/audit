@@ -26,7 +26,9 @@ class AllocoreKpiReporter
      */
     public function report(Audit $audit): bool
     {
-        if (! $this->configured()) {
+        [$hubUrl, $apiKey] = $this->connectionFor($audit);
+
+        if (! $hubUrl || ! $apiKey) {
             return false;
         }
 
@@ -38,9 +40,9 @@ class AllocoreKpiReporter
 
         try {
             $response = Http::timeout((int) config('allocore.timeout', 5))
-                ->withHeaders(['X-Allocore-Api-Key' => config('allocore.api_key')])
+                ->withHeaders(['X-Allocore-Api-Key' => $apiKey])
                 ->acceptJson()
-                ->post($this->ingestUrl(), [
+                ->post($this->ingestUrl($hubUrl), [
                     'source' => config('allocore.source', 'audit'),
                     'external_ref' => 'audit-'.$audit->id,
                     'recorded_at' => optional($audit->updated_at)->toDateString() ?? now()->toDateString(),
@@ -54,8 +56,12 @@ class AllocoreKpiReporter
                     'body' => $response->body(),
                 ]);
 
+                $this->markOrganization($audit, 'error');
+
                 return false;
             }
+
+            $this->markOrganization($audit, 'connected');
 
             return true;
         } catch (\Throwable $e) {
@@ -64,8 +70,48 @@ class AllocoreKpiReporter
                 'error' => $e->getMessage(),
             ]);
 
+            $this->markOrganization($audit, 'error');
+
             return false;
         }
+    }
+
+    /**
+     * Resolve the hub URL + API key for an audit.
+     *
+     * The audit's organization takes precedence (self-service connection set
+     * on the AlloCore Hub screen); the global .env config is used as a
+     * fallback for backward compatibility.
+     *
+     * @return array{0: ?string, 1: ?string}
+     */
+    protected function connectionFor(Audit $audit): array
+    {
+        if (! (bool) config('allocore.enabled', true)) {
+            return [null, null];
+        }
+
+        $organization = $audit->organization;
+
+        if ($organization && $organization->allocoreConnected()) {
+            return [$organization->allocore_hub_url, $organization->allocore_api_key];
+        }
+
+        return [config('allocore.hub_url'), config('allocore.api_key')];
+    }
+
+    protected function markOrganization(Audit $audit, string $status): void
+    {
+        $organization = $audit->organization;
+
+        if (! $organization || ! $organization->allocoreConnected()) {
+            return;
+        }
+
+        $organization->forceFill([
+            'allocore_status' => $status,
+            'allocore_last_synced_at' => $status === 'connected' ? now() : $organization->allocore_last_synced_at,
+        ])->save();
     }
 
     public function configured(): bool
@@ -118,8 +164,8 @@ class AllocoreKpiReporter
             ?? 'audit.'.Str::slug($pillarName, '_');
     }
 
-    protected function ingestUrl(): string
+    protected function ingestUrl(string $hubUrl): string
     {
-        return rtrim((string) config('allocore.hub_url'), '/').'/api/allocore/kpi/ingest';
+        return rtrim($hubUrl, '/').'/api/allocore/kpi/ingest';
     }
 }

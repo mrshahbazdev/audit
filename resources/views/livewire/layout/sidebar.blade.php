@@ -53,6 +53,11 @@ new class extends Component {
                 <span class="material-symbols-outlined">compare_arrows</span>
                 <span>{{ __('Compare') }}</span>
             </a>
+            <a href="{{ route('allocore.hub') }}" wire:navigate
+                class="flex items-center gap-3 px-3 py-2.5 rounded-xl {{ request()->routeIs('allocore.hub') ? 'bg-primary/10 text-primary font-semibold' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors' }}">
+                <span class="material-symbols-outlined">hub</span>
+                <span>{{ __('AlloCore Hub') }}</span>
+            </a>
             <a href="{{ route('docs') }}" wire:navigate
                 class="flex items-center gap-3 px-3 py-2.5 rounded-xl {{ request()->routeIs('docs') ? 'bg-primary/10 text-primary font-semibold' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors' }}">
                 <span class="material-symbols-outlined">menu_book</span>

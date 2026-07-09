@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/audits', \App\Livewire\Audits::class)->name('audits');
     Route::get('/audit/{audit}/report', [AuditController::class, 'report'])->name('audit.report');
     Route::get('/compare', \App\Livewire\AuditCompare::class)->name('audit.compare');
+    Route::get('/allocore-hub', \App\Livewire\AllocoreHub::class)->name('allocore.hub');
 });
 
 require __DIR__ . '/auth.php';
